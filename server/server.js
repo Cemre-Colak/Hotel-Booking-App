@@ -7,7 +7,13 @@ import clerkWebHooks from "./controllers/clerkWebHooks.js"
 import bodyParser from "body-parser"
 import userRouter from "./routes/userRoutes.js"
 import hotelRouter from "./routes/hotelRoutes.js"
-connectDB()
+import connectCloudinary from "./configs/cloudinary.js"
+import roomRouter from "./routes/roomRoutes.js"
+import bookingRouter from "./routes/bookingRoutes.js"
+
+
+connectDB();
+connectCloudinary();
 
 
 const app = express()
@@ -21,9 +27,13 @@ app.use(clerkMiddleware())
 //API to listen to Clerk WEbhooks
 app.use("/api/clerk", clerkWebHooks);
 
+
 app.get("/", (req, res)=> res.send("API is working"))
 app.use("/api/user",  userRouter);
 app.use("/api/hotels",  hotelRouter);
+app.use("/api/rooms", roomRouter );
+app.use("/api/bookings", bookingRouter );
+
 
 
 
